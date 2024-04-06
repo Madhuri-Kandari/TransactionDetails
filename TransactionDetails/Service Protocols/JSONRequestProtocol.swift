@@ -7,6 +7,6 @@
 
 import Foundation
 
-protocol JSONRequestProtocol {
+public protocol JSONRequestProtocol {
     func load<T: Decodable>(_ filename: String) -> T
 }

@@ -19,7 +19,12 @@ class PendingTransactionsViewModel: ObservableObject {
         return userAccountRepo.fetchCompletedTransactionDetails() ?? []
     }
     
-    func getPendingTransactions() -> [PendingDomainModel] {
-        return userAccountRepo.fetchPendingTransactionDetails() ?? []
+    func getPendingTransactions(completion:@escaping ([PendingDomainModel]) -> ()) {
+        let result = userAccountRepo.fetchPendingTransactionDetails()
+        guard let result = result else {
+            completion([])
+            return
+        }
+        completion(result)
     }
 }

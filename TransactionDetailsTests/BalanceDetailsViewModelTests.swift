@@ -6,15 +6,25 @@
 //
 
 import XCTest
+@testable import TransactionDetails
 
 final class BalanceDetailsViewModelTests: XCTestCase {
+    
+    var userAccountProtocol: MockUserAccountRepository!
+    var sut: BalanceDetailsViewModel?
+    
+    var failureUserData = UserAccountDataResult(account: Account(accountName: "", accountNumber: "", available: 0.0, balance: 0.0), transactions: [Pending(id: "", description: "", effectiveDate: "", amount: 0.0, atmID: nil)], pending: [Pending(id: "", description: "", effectiveDate: "", amount: 0.0, atmID: nil)], atms: [ATM(id: "", name: "", address: "", location: Location(lat: 0.0, lng: 0.0))])
+    
+    var successUserData = UserAccountDataResult(account: Account(accountName: "Test", accountNumber: "1234", available: 234.9, balance: 200.3), transactions: [Pending(id: "1", description: "Test Desc", effectiveDate: "12/11/2012", amount: 232.3, atmID: nil)], pending: [Pending(id: "1", description: "Test Desc", effectiveDate: "12/11/2012", amount: 232.3, atmID: nil)], atms: [ATM(id: "Test", name: "Test", address: "Test Address", location: Location(lat: 23.32, lng: 34.44))])
 
     override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+        userAccountProtocol = MockUserAccountRepository()
+        sut = .init(userAccountRepo: userAccountProtocol)
     }
 
     override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+        userAccountProtocol = nil
+        sut = nil
     }
 
     func testExample() throws {
@@ -31,5 +41,46 @@ final class BalanceDetailsViewModelTests: XCTestCase {
             // Put the code you want to measure the time of here.
         }
     }
+    
+    func test_getAccountName_Success() {
+        userAccountProtocol.userAccount = successUserData
+        let _ = sut?.getAccountName()
+    }
+    
+    func test_getAccountName_Failure() {
+        userAccountProtocol.userAccount = failureUserData
+        let _ = sut?.getAccountName()
+    }
+    
+    func test_getAccountNumber_Success() {
+        userAccountProtocol.userAccount = successUserData
+        let _ = sut?.getAccountNumber()
+    }
+    
+    func test_getAccountNumber_Failure() {
+        userAccountProtocol.userAccount = failureUserData
+        let _ = sut?.getAccountNumber()
+    }
+    
+    func test_getAvailableFunds_Success() {
+        userAccountProtocol.userAccount = successUserData
+        let _ = sut?.getAvailableFunds()
+    }
+    
+    func test_getAvailableFunds_Failure() {
+        userAccountProtocol.userAccount = failureUserData
+        let _ = sut?.getAvailableFunds()
+    }
+    
+    func test_getAvailableBalance_Success() {
+        userAccountProtocol.userAccount = successUserData
+        let _ = sut?.getAvailableBalance()
+    }
+    
+    func test_getAvailableBalance_Failure() {
+        userAccountProtocol.userAccount = failureUserData
+        let _ = sut?.getAvailableBalance()
+    }
+    
 
 }

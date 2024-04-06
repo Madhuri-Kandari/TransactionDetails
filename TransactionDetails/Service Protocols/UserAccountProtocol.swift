@@ -9,8 +9,7 @@ import Foundation
 
 protocol UserAccountProtocol: AnyObject {
     
-    func fetchUserAccounts() -> UserAccountDataResult
-    func fetchAccountDetails() -> Account
-    func fetchCompletedTransactionDetails() -> [Pending]
-    func fetchPendingTransactionDetails() -> [Pending]
+    func fetchAccountDetails() -> AccountDomainModel?
+    func fetchCompletedTransactionDetails() -> [PendingDomainModel]?
+    func fetchPendingTransactionDetails() -> [PendingDomainModel]?
 }

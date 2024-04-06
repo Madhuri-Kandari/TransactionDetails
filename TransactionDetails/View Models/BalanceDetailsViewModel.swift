@@ -9,27 +9,27 @@ import Foundation
 
 class BalanceDetailsViewModel: ObservableObject {
     
-    var accountDetailsProtocol: AccountDetailsProtocol!
+    var userAccountRepo: UserAccountProtocol!
     
-    init(accountDetailsProtocol: AccountDetailsProtocol!) {
-        self.accountDetailsProtocol = accountDetailsProtocol
+    init(userAccountRepo: UserAccountProtocol!) {
+        self.userAccountRepo = userAccountRepo
     }
     
     func getAccountName() -> String {
-        return accountDetailsProtocol.fetchAccountDetails().accountName
+        return userAccountRepo.fetchAccountDetails()?.accountName ?? "No Account Name"
     }
     
     func getAccountNumber() -> String {
-        return accountDetailsProtocol.fetchAccountDetails().accountNumber
+        return userAccountRepo.fetchAccountDetails()?.accountNumber ?? "No Account Number"
     }
     
     func getAvailableFunds() -> String {
-        let available = accountDetailsProtocol.fetchAccountDetails().available
-        return String.init(available)
+        let available = userAccountRepo.fetchAccountDetails()?.available
+        return String.init(available ?? 0.0)
     }
     
     func getAvailableBalance() -> String {
-        let balance = accountDetailsProtocol.fetchAccountDetails().balance
-        return String.init(balance)
+        let balance = userAccountRepo.fetchAccountDetails()?.balance
+        return String.init(balance ?? 0.0)
     }
 }

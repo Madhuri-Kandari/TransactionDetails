@@ -12,6 +12,8 @@ struct TransactionDetailsView: View {
     var body: some View {
         VStack {
             PendingDetailsView()
+            CompletedTransactionsView()
+            Spacer()
         }
     }
 }

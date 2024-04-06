@@ -8,7 +8,8 @@
 import SwiftUI
 
 struct BalanceDetailsView: View {
-    @StateObject private var viewModel = BalanceDetailsViewModel(accountDetailsProtocol: AccountDetailsRepository(userAccountProtocol: UserAccountRepository(jsonRequestProtocol: JSONRequestManager())))
+    @StateObject private var viewModel = BalanceDetailsViewModel(userAccountRepo: UserAccountRepository(jsonRequestProtocol: JSONRequestManager()))
+    
     var body: some View {
         ZStack(alignment: .leading, content: {
             Rectangle()

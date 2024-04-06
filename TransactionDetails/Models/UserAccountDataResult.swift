@@ -34,7 +34,7 @@ struct Location: Decodable {
 }
 
 // MARK: - Pending
-struct Pending: Decodable {
+struct Pending: Decodable, Identifiable {
     let id, description, effectiveDate: String
     let amount: Double
     let atmID: String?

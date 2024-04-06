@@ -5,58 +5,50 @@
 //  Created by Chandana Sudha Madhuri Kandari on 03/04/24.
 //
 
-//import Foundation
-//
-//class UserAccountDomainResult {
-//    var account: AccountDomainModel?
-//    var transactions, pending: [PendingDomainModel]?
-//    
-//    init() {}
-//}
-//
-//extension UserAccountDomainResult {
-//    convenience init(userAccountDataResult: UserAccountDataResult) {
-//        self.init()
-//        self.account?.transform(account: userAccountDataResult.account)
-//        self.transactions?.forEach { transaction in
-//            transaction.transform(pendings: userAccountDataResult.transactions)
-//        }
-//        self.pending?.forEach { pendingTransaction in
-//            pendingTransaction.transform(pendings: userAccountDataResult.pending)
-//        }
-//    }
-//}
-//
-//class AccountDomainModel {
-//    var accountName, accountNumber: String?
-//    var available, balance: Double?
-//    
-//    init() {}
-//}
-//
-//extension AccountDomainModel {
-//    func transform(account: Account) {
-//        self.accountName = account.accountName
-//        self.accountNumber = account.accountNumber
-//        self.available = account.available
-//        self.balance = account.balance
-//    }
-//}
-//
-//
-//class PendingDomainModel {
-//    var description, effectiveDate: String?
-//    var amount: Double?
-//
-//    init() {}
-//}
-//
-//extension PendingDomainModel {
-//    func transform(pendings: [Pending]) {
-//        pendings.forEach { pending in
-//            self.description = pending.description
-//            self.effectiveDate = pending.effectiveDate
-//            self.amount = pending.amount
-//        }
-//    }
-//}
+import Foundation
+
+class UserAccountDomainResult {
+    var account: AccountDomainModel
+    var transactions, pendings: [PendingDomainModel]
+    
+    init(account: Account, transactions: [Pending], pendings: [Pending]) {
+        self.account = AccountDomainModel.init(account: account)
+        var trans: [PendingDomainModel] = []
+        transactions.forEach({ transaction in
+            trans.append(PendingDomainModel.init(pending: transaction))
+        })
+        self.transactions = trans
+        
+        var pend: [PendingDomainModel] = []
+        pendings.forEach({ pen in
+            pend.append(PendingDomainModel.init(pending: pen))
+        })
+        
+        self.pendings = pend
+    }
+}
+
+class AccountDomainModel {
+    var accountName, accountNumber: String?
+    var available, balance: Double?
+    
+    init(account: Account) {
+        self.accountName = account.accountName
+        self.accountNumber = account.accountNumber
+        self.available = account.available
+        self.balance = account.balance
+    }
+
+}
+
+
+class PendingDomainModel: Identifiable {
+    var description, effectiveDate: String?
+    var amount: Double?
+
+    init(pending: Pending) {
+        self.description = pending.description
+        self.effectiveDate = pending.effectiveDate
+        self.amount = pending.amount
+    }
+}

@@ -17,6 +17,7 @@ struct ContentView: View {
                 ScrollView(.vertical, showsIndicators: false) {
                     BalanceDetailsView()
                         .frame(minHeight: 200)
+                    TransactionDetailsView()
                 }
             }
         }
